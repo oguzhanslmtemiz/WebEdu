@@ -1,0 +1,23 @@
+{
+  "name": "webedu",
+  "version": "1.0.0",
+  "description": "Web Education App Project",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "keywords": [
+    "Node.js",
+    "Express.js",
+    "MongoDB"
+  ],
+  "author": "Oguzhan Selim Temiz",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
