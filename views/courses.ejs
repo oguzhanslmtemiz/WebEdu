@@ -1,0 +1,45 @@
+<%- include('partials/_head') %>
+
+<body class="sub_page">
+  <div class="hero_area">
+    <%- include('partials/_header') %>
+  </div>
+
+  <!-- course section -->
+
+  <section class="course_section layout_padding">
+    <div class="side_img">
+      <img src="images/side-img.png" alt="" />
+    </div>
+    <div class="container">
+      <div class="heading_container">
+        <h3>
+          POPULAR COURSES
+        </h3>
+        <p>
+          It is a long established fact that a reader will be distracted
+        </p>
+      </div>
+      <div class="course_container">
+        <div class="course_content">
+          <% for (let i = 0; i < courses.length; i++) { %>
+          <div class="box">
+            <img src="images/c-2.jpg" alt="" />
+            <a href="" class="">
+              <img src="images/link.png" alt="" />
+            </a>
+            <h5> <%= courses[i].name %> </h5>
+          </div>
+          <% } %>
+        </div>
+      </div>
+      <div class="btn-box">
+        <a href="">
+          Read More
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- end course section -->
+  <%- include('partials/_footer') %>
