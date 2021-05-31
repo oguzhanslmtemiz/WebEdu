@@ -1,0 +1,50 @@
+<%- include('partials/_head') %>
+
+<body class="sub_page">
+  <div class="hero_area">
+    <%- include('partials/_header') %>
+  </div>
+
+  <!-- login section -->
+
+  <section class="login_section layout_padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="detail-box">
+            <h3>
+              GET ONLINE COURSES FOR FREE
+            </h3>
+            <p>
+              Already registered?
+            </p>
+            <a href="/login">
+              Sign in
+            </a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="login_form">
+            <h5>
+              Register Now
+            </h5>
+            <form method="POST" action="/users/register">
+              <div>
+                <input type="text" name="name" placeholder="Name" required/>
+              </div>
+              <div>
+                <input type="email" name="email" placeholder="Email" required/>
+              </div>
+              <div>
+                <input type="password" name="password" placeholder="Password" required/>
+              </div>
+              <button type="submit">Sign Up</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- end login section -->
+  <%- include('partials/_footer') %>

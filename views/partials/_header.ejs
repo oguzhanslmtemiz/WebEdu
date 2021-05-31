@@ -24,13 +24,13 @@
                     <li class="nav-item <%= page_name === 'courses' && 'active' %>">
                         <a class="nav-link" href="/courses"> Courses </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item <%= page_name === 'event' && 'active' %>">
                         <a class="nav-link" href="/event"> Events </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item <%= page_name === 'contact' && 'active' %>">
                         <a class="nav-link" href="/contact">Contact us</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item <%= ((page_name === 'login') || (page_name === 'register')) && 'active' %>">
                         <a class="nav-link" href="/login">Login</a>
                     </li>
                 </ul>
