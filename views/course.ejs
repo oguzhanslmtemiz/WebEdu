@@ -1,0 +1,52 @@
+<%- include('partials/_head') %>
+
+
+<body class="sub_page">
+  <div class="hero_area">
+    <%- include('partials/_header') %>
+  </div>
+
+  <!-- event section -->
+  <section class="event_section layout_padding">
+    <div class="container">
+      <div class="heading_container">
+        <h3>
+           Course: <%= course.name %>
+        </h3>
+        <p>
+          <%= course.description %>
+        </p>
+      </div>
+      <div class="event_container">
+        <div class="box">
+          <div class="img-box">
+            <img src="/images/event-img.jpg" alt="" />
+          </div>
+          <div class="detail-box">
+            <h4>
+              <%= course.name %>
+            </h4>
+            <h6>
+              <%= course.description %>
+            </h6>
+          </div>
+          <div class="date-box">
+            <h3>
+              <span>
+                15
+              </span>
+              March
+            </h3>
+          </div>
+        </div>
+      </div>
+      <div class="btn-box">
+        <a href="">
+          Read More
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- end event section -->
+  <%- include('partials/_footer') %>

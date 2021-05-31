@@ -9,7 +9,7 @@
 
   <section class="course_section layout_padding">
     <div class="side_img">
-      <img src="images/side-img.png" alt="" />
+      <img src="/images/side-img.png" alt="" />
     </div>
     <div class="container">
       <div class="heading_container">
@@ -24,9 +24,9 @@
         <div class="course_content">
           <% for (let i = 0; i < courses.length; i++) { %>
           <div class="box">
-            <img src="images/c-2.jpg" alt="" />
-            <a href="" class="">
-              <img src="images/link.png" alt="" />
+            <img src="/images/c-2.jpg" alt="" />
+            <a href="/courses/<%= courses[i].slug %>" class="">
+              <img src="/images/link.png" alt="" />
             </a>
             <h5> <%= courses[i].name %> </h5>
           </div>

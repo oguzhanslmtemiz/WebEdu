@@ -8,7 +8,8 @@ const courseRoute = require('./routes/courseRoute')
 //Connect DB
 mongoose.connect('mongodb://localhost/webedu-db', {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true
 })
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'))
