@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const app = express()
 const pageRoute = require('./routes/pageRoute')
 const courseRoute = require('./routes/courseRoute')
+const categoryRoute = require('./routes/categoryRoute')
 
 //Connect DB
 mongoose.connect('mongodb://localhost/webedu-db', {
@@ -28,8 +29,9 @@ app.use(express.urlencoded({
 }))
 
 //Routes
-app.use(pageRoute)
+app.use('/', pageRoute)
 app.use('/courses', courseRoute)
+app.use('/categories', categoryRoute)
 
 const PORT = 5000
 app.listen(PORT, () => {

@@ -20,6 +20,29 @@
           It is a long established fact that a reader will be distracted
         </p>
       </div>
+      <div class="categories">
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="course_nav">
+              <nav>
+                <ul class="nav" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link <%= categorySlug == null && 'active' %>" href="/courses" role="tab"
+                      aria-controls="courses" aria-selected="true">All Courses</a>
+                  </li>
+                  <% for (let i=0; i< categories.length; i++) { %>
+                  <li class="nav-item">
+                    <a class="nav-link <%= categorySlug === categories[i].slug && 'active' %>"
+                      href="/courses?categories=<%= categories[i].slug %>" role="tab"
+                      aria-controls="<%= categories[i].slug %>" aria-selected="false"><%= categories[i].name %></a>
+                  </li>
+                  <% } %>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="course_container">
         <div class="course_content">
           <% for (let i = 0; i < courses.length; i++) { %>

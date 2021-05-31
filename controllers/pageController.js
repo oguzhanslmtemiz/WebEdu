@@ -1,8 +1,6 @@
 module.exports.getIndexPage = (req, res) => {
     res.status(200).render('index', {
-        page_name: "index",
-        title: 'Hey',
-        message: 'Hello there!'
+        page_name: "index"
     })
 }
 module.exports.getAboutPage = (req, res) => {

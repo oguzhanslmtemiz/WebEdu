@@ -5,7 +5,7 @@ body {
 }
 
 .layout_padding {
-  padding: 90px 0;
+  padding: 45px 0;
 }
 
 .layout_padding2 {
@@ -927,3 +927,34 @@ a:focus {
 
 /* end footer section*/
 /*# sourceMappingURL=style.css.map */
+
+/*-----------*/
+
+.categories .course_nav .nav {
+  -webkit-justify-content: space-between;
+  -moz-justify-content: space-between;
+  -ms-justify-content: space-between;
+  justify-content: space-between;
+  -ms-flex-pack: space-between;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #E8E8E8;
+}
+
+.categories .course_nav .nav li a {
+  color: #133e3f;
+}
+.categories .course_nav .nav li a.active {
+  color: #000000;
+  position: relative;
+  z-index: 9;
+}
+
+.categories .course_nav .nav li a.active::before {
+  content: "";
+  background: #4bc5b8;
+  width: 100%;
+  height: 3px;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+}
