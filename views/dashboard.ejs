@@ -1,6 +1,5 @@
 <%- include('partials/_head') %>
 
-
 <body class="sub_page">
   <div class="hero_area">
     <%- include('partials/_header') %>
@@ -11,35 +10,23 @@
     <div class="container">
       <div class="heading_container">
         <h3>
-          <% if(course) { %>
-          <%= course.name %>
-          <% }  %>
-          <% if(!course) { %>
-          Course Not Found
-          <% } %>
+          <%= user.name %>
         </h3>
         <p>
-          <% if(course) { %>
-          <%= course.description %>
-          <% }  %>
+          <%= user.email %>
         </p>
       </div>
-      <% if(course) { %>
       <div class="event_container">
         <div class="box">
           <div class="img-box">
-            <img src="/images/event-img.jpg" alt="" />
+            <img src="images/event-img.jpg" alt="" />
           </div>
           <div class="detail-box">
             <h4>
-              <% if(course) { %>
-              <%= course.name %>
-              <% }  %>
+              Education Events 2021
             </h4>
             <h6>
-              <% if(course) { %>
-              <%= course.description %>
-              <% }  %>
+              8:00 AM - 5:00 PM VENICE, ITALY
             </h6>
           </div>
           <div class="date-box">
@@ -51,8 +38,28 @@
             </h3>
           </div>
         </div>
+        <div class="box">
+          <div class="img-box">
+            <img src="images/event-img.jpg" alt="" />
+          </div>
+          <div class="detail-box">
+            <h4>
+              Education Events 2021
+            </h4>
+            <h6>
+              8:00 AM - 5:00 PM VENICE, ITALY
+            </h6>
+          </div>
+          <div class="date-box">
+            <h3>
+              <span>
+                15
+              </span>
+              February
+            </h3>
+          </div>
+        </div>
       </div>
-      <% }  %>
       <div class="btn-box">
         <a href="">
           Read More
