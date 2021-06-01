@@ -25,10 +25,10 @@ module.exports.loginUser = async (req, res) => {
             if (user) {
                 const match = await bcrypt.compare(req.body.password, user.password)
                 if (match) {
-                    // USER SESSION
-                    res.status(200).send('YOU ARE LOGGED IN')
+                    req.session.userID = user._id
+                    res.status(200).redirect('/')
                 } else {
-                res.status(400).send('Wrong Password <a href="/login">Back</a>')
+                    res.status(400).send('Wrong Password <a href="/login">Back</a>')
                 }
             } else {
                 res.status(404).send('There is no such e-mail on the system <a href="/login">Back</a>')
@@ -40,4 +40,10 @@ module.exports.loginUser = async (req, res) => {
             error
         })
     }
+}
+
+module.exports.logoutUser = (req, res) => {
+    req.session.destroy(function (err) {
+        res.redirect('/')
+    })
 }

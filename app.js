@@ -1,5 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const session = require('express-session')
+const MongoStore = require('connect-mongo')
 
 const app = express()
 const pageRoute = require('./routes/pageRoute')
@@ -8,7 +10,8 @@ const categoryRoute = require('./routes/categoryRoute')
 const userRoute = require('./routes/userRoute')
 
 //Connect DB
-mongoose.connect('mongodb://localhost/webedu-db', {
+const mongoUrl = 'mongodb://localhost/webedu-db'
+mongoose.connect(mongoUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
@@ -22,14 +25,29 @@ db.once('open', function () {
 //Template Engine
 app.set('view engine', 'ejs')
 
+//Global Variable
+global.userIN = null
+
 //Middlewares
 app.use(express.static('public'))
 app.use(express.json())
 app.use(express.urlencoded({
     extended: true
 }))
+app.use(session({
+    secret: 'mouse education cat',
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({
+        mongoUrl
+    })
+}))
 
 //Routes
+app.use(function (req, res, next) {
+    userIN = req.session.userID
+    next()
+})
 app.use('/', pageRoute)
 app.use('/courses', courseRoute)
 app.use('/categories', categoryRoute)

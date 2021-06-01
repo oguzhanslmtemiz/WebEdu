@@ -958,3 +958,12 @@ a:focus {
   left: 0;
   position: absolute;
 }
+
+.header_section{
+  max-height: 84px;
+}
+
+.nav-item .logout{
+  max-height: 84px;
+  padding-top: 40px !important;
+}

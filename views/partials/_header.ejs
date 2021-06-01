@@ -24,19 +24,33 @@
                     <li class="nav-item <%= page_name === 'courses' && 'active' %>">
                         <a class="nav-link" href="/courses"> Courses </a>
                     </li>
-                    <li class="nav-item <%= page_name === 'event' && 'active' %>">
-                        <a class="nav-link" href="/event"> Events </a>
-                    </li>
                     <li class="nav-item <%= page_name === 'contact' && 'active' %>">
                         <a class="nav-link" href="/contact">Contact us</a>
                     </li>
+                    <% if(userIN){ %>
+                    <li class="nav-item <%= page_name === 'events' && 'active' %>">
+                        <a class="nav-link" href="/events"> Events </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link logout" href="/users/logout">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                                class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z">
+                                </path>
+                                <path fill-rule="evenodd"
+                                    d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z">
+                                </path>
+                            </svg>
+                        </a>
+                    </li>
+                    <% } %>
+                    <% if(!userIN){ %>
                     <li class="nav-item <%= ((page_name === 'login') || (page_name === 'register')) && 'active' %>">
                         <a class="nav-link" href="/login">Login</a>
                     </li>
+                    <% } %>
                 </ul>
-                <form class="form-inline my-2 my-lg-0 ml-0 ml-lg-4 mb-3 mb-lg-0">
-                    <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
-                </form>
             </div>
         </nav>
     </div>
