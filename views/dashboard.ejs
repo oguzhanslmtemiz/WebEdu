@@ -4,7 +4,7 @@
   <div class="hero_area">
     <%- include('partials/_header') %>
   </div>
-
+  <% if(user) { %>
   <!-- event section -->
   <section class="event_section layout_padding">
     <div class="container">
@@ -13,17 +13,82 @@
           <%= user.name %>
         </h3>
         <p>
-          <%= user.email %>
+          <%= user.role %>
         </p>
       </div>
+
+      <% if((user.role === 'admin') || (user.role === 'teacher')) { %>
+      <div class="course_create">
+        <div class="col-lg-12 text-center ">
+          <button class="btn btn-lg btn-ost rounded-0 text-white" href="#" data-toggle="modal"
+            data-target="#addCourse"><span>CREATE NEW COURSE</span></button>
+        </div>
+        <!-- MODAL SECTION -->
+        <div class="modal fade" id="addCourse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-body customer-box">
+                <!-- Tab panes -->
+                <div class="tab-content">
+                  <div class="tab-pane active" id="Login">
+                    <form method="POST" action="/courses" class="form-horizontal">
+                      <div class="form-group">
+                        <div class="col-sm-12">
+                          <input type="text" name="name" class="form-control" placeholder="Course Name">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-sm-12">
+                          <input type="hidden" name="role" class="form-control" value="<%= user.role %>">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-sm-12">
+                          <textarea rows="8" name="description" class="form-control" placeholder="Course Description"
+                            required></textarea>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-sm-12">
+                          <select class="form-control" name="category">
+                            <% for (let i=0; i< categories.length; i++) { %>
+                            <option value="<%= categories[i]._id %>"><%= categories[i].name %></option>
+                            <% } %>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group ost">
+                        <div class="col-sm-12 modal-btn">
+                          <button type="submit" class="btn btn-ost text-white btn-radius btn-brd grd1">
+                            Submit
+                          </button>
+                          <button type="submit" class="btn btn-outline-danger btn-radius btn-brd grd1"
+                            data-dismiss="modal">
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- END MODAL SECTION -->
+      </div>
+      <div class="mt-4 text-center">
+        <h3>Courses created by you</h3>
+      </div>
       <div class="event_container">
+        <% for (let i=0; i< courses.length; i++) { %>
         <div class="box">
           <div class="img-box">
-            <img src="images/event-img.jpg" alt="" />
+            <img src="/images/event-img.jpg" alt="" />
           </div>
           <div class="detail-box">
             <h4>
-              Education Events 2021
+              <%= courses[i].name %>
             </h4>
             <h6>
               8:00 AM - 5:00 PM VENICE, ITALY
@@ -38,16 +103,24 @@
             </h3>
           </div>
         </div>
+        <% } %>
+      </div>
+
+      <div class="mt-4 text-center">
+        <h3>Courses enrolled by you</h3>
+      </div>
+      <div class="event_container">
+        <% for (let i=0; i< user.courses.length; i++) { %>
         <div class="box">
           <div class="img-box">
-            <img src="images/event-img.jpg" alt="" />
+            <img src="/images/event-img.jpg" alt="" />
           </div>
           <div class="detail-box">
             <h4>
-              Education Events 2021
+              <%= user.courses[i].name %>
             </h4>
             <h6>
-              8:00 AM - 5:00 PM VENICE, ITALY
+              <%= user.courses[i].description %>
             </h6>
           </div>
           <div class="date-box">
@@ -55,18 +128,59 @@
               <span>
                 15
               </span>
-              February
+              March
             </h3>
+            <form action="/courses/<%= user.courses[i].slug %>/unenroll" method="POST">
+              <div class="btn-box">
+                <input type="hidden" name="course_id" value="<%= user.courses[i]._id %>">
+                <button class="btn btn-lg btn-danger rounded-0 text-white"><span>UNENROLL</span></button>
+              </div>
+            </form>
           </div>
         </div>
+        <% } %>
       </div>
+
       <div class="btn-box">
         <a href="">
           Read More
         </a>
       </div>
+
+      <% } %>
+
+      <% if( user.role === 'student') { %>
+      <div class="mt-4 text-center">
+        <h3>Courses enrolled by you</h3>
+      </div>
+      <div class="event_container">
+        <% for (let i=0; i< user.courses.length; i++) { %>
+        <div class="box">
+          <div class="img-box">
+            <img src="/images/event-img.jpg" alt="" />
+          </div>
+          <div class="detail-box">
+            <h4>
+              <%= user.courses[i].name %>
+            </h4>
+            <h6>
+              <%= user.courses[i].description %>
+            </h6>
+          </div>
+          <div class="date-box">
+            <h3>
+              <span>
+                15
+              </span>
+              March
+            </h3>
+          </div>
+        </div>
+        <% } %>
+      </div>
+      <% } %>
     </div>
   </section>
-
+  <% } %>
   <!-- end event section -->
   <%- include('partials/_footer') %>

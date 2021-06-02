@@ -9,38 +9,25 @@
   <!-- event section -->
   <section class="event_section layout_padding">
     <div class="container">
-      <div class="heading_container">
-        <h3>
-          <% if(course) { %>
-          <%= course.name %>
-          <% }  %>
-          <% if(!course) { %>
-          Course Not Found
-          <% } %>
-        </h3>
-        <p>
-          <% if(course) { %>
-          <%= course.description %>
-          <% }  %>
-        </p>
-      </div>
       <% if(course) { %>
+      <div class="heading_container">
+        <h3><%= course.name %></h3>
+        <p><%= course.description %></p>
+      </div>
       <div class="event_container">
         <div class="box">
           <div class="img-box">
             <img src="/images/event-img.jpg" alt="" />
           </div>
           <div class="detail-box">
+            <% if(course.user) { %>
             <h4>
-              <% if(course) { %>
-              <%= course.name %>
-              <% }  %>
+              <%= course.user.name %>
             </h4>
             <h6>
-              <% if(course) { %>
-              <%= course.description %>
-              <% }  %>
+              <%= course.user.email %>
             </h6>
+            <% }  %>
           </div>
           <div class="date-box">
             <h3>
@@ -52,12 +39,27 @@
           </div>
         </div>
       </div>
+
+      <% if(user && !(user.courses.includes(course._id))) { %>
+      <form action="/courses/<%= course.slug %>/enroll" method="POST">
+        <div class="btn-box">
+          <input type="hidden" name="course_id" value="<%= course._id %>">
+          <button class="btn btn-lg btn-ost rounded-0 text-white"><span>ENROLL</span></button>
+        </div>
+      </form>
       <% }  %>
+      <% if(user && (user.courses.includes(course._id))) { %>
       <div class="btn-box">
-        <a href="">
-          Read More
-        </a>
+        <button class="btn btn-lg btn-ost rounded-0 text-white disabled"><span>You Are Already Enrolled</span></button>
       </div>
+      <% }  %>
+
+      <% }  %>
+      <% if(!course) { %>
+      <div class="heading_container">
+        <h3>Course Not Found</h3>
+      </div>
+      <% }  %>
     </div>
   </section>
 
