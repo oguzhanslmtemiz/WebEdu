@@ -15,6 +15,15 @@ module.exports.getAllCourses = async (req, res) => {
                 category: category._id
             }
         }
+        const searchQuery = req.query.search
+        if (searchQuery) {
+            filter = {
+                name: {
+                    $regex: '.*' + searchQuery + '.*',
+                    $options: 'ix'
+                }
+            }
+        }
 
         const categories = await Category.find()
         const courses = await Course.find(filter).sort('-createdAt').populate('user')

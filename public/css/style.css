@@ -132,17 +132,6 @@ a:focus {
   align-items: center;
 }
 
-.custom_nav-container .nav_search-btn {
-  background-image: url(../images/search-icon.png);
-  background-size: 20px;
-  background-repeat: no-repeat;
-  background-position-y: 7px;
-  width: 35px;
-  height: 35px;
-  padding: 0;
-  border: none;
-}
-
 .navbar-brand {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -961,10 +950,6 @@ a:focus {
   position: absolute;
 }
 
-.header_section {
-  max-height: 84px;
-}
-
 .nav-item .logout {
   max-height: 84px;
   padding-top: 40px !important;
@@ -985,7 +970,7 @@ a:focus {
 }
 
 .btn-ost:hover {
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
   color: #133e3f !important;
   border-color: #133e3f;
 }
@@ -1002,9 +987,59 @@ a:focus {
   color: #ffffff;
 
 }
+
 .course_section .course_container .course_content .box p {
   position: absolute;
   left: 35px;
   top: 100px;
   color: #ffffff;
+}
+
+.searchbar {
+  background-color: #133e3f;
+  display: flex;
+  justify-content: space-between;
+}
+
+.searchbar input.search_input {
+  color: white;
+  border: 0;
+  outline: 0;
+  background: none;
+  width: 0;
+  transition: width 0.4s linear;
+  padding: 0px;
+}
+
+.searchbar:hover>.search_input {
+  padding: 0 10px;
+  width: 150px;
+  transition: width 0.4s linear;
+}
+
+.searchbar .search_input:focus {
+  padding: 0 10px;
+  width: 150px;
+}
+
+.searchbar a {
+  padding: 3px;
+}
+
+.searchbar a.search_icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  touch-action: none;
+}
+
+.searchbar i.nav_search-btn {
+  background-image: url(../images/search-icon.png);
+  background-repeat: no-repeat;
+  width: 35px;
+  height: 35px;
+  padding: 0;
+  border: none;
+  background-position: center;
 }

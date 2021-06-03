@@ -26,6 +26,12 @@
             <div class="course_nav">
               <nav>
                 <ul class="nav" role="tablist">
+                  <form class="search-form" action="/courses" method="GET">
+                    <div class="searchbar">
+                      <input class="search_input" id="search_input" type="text" name="search" placeholder="Search...">
+                      <a class="search_icon"><i class="nav_search-btn"></i></a>
+                    </div>
+                  </form>
                   <li class="nav-item">
                     <a class="nav-link <%= categorySlug == null && 'active' %>" href="/courses" role="tab"
                       aria-controls="courses" aria-selected="true">All Courses</a>
