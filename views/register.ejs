@@ -28,6 +28,18 @@
             <h5>
               Register Now
             </h5>
+            <% if (flashMessages) { %>
+            <div id="alert-container" class="text-center">
+              <% if (flashMessages.error) { %>
+              <div class="alert alert-danger">
+                <%= flashMessages.error %>
+              </div>
+              <% } %>
+            </div>
+            <script type="text/javascript">
+              setTimeout("document.getElementById('alert-container').remove()", 3000);
+            </script>
+            <% } %>
             <form method="POST" action="/users/register">
               <div>
                 <input type="text" name="name" placeholder="Name" required />

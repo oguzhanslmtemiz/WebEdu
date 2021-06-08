@@ -29,12 +29,24 @@
             <h5>
               Login Now
             </h5>
+            <% if (flashMessages) { %>
+            <div id="alert-container" class="text-center">
+              <% if (flashMessages.error) { %>
+              <div class="alert alert-danger">
+                <%= flashMessages.error %>
+              </div>
+              <% } %>
+            </div>
+            <script type="text/javascript">
+              setTimeout("document.getElementById('alert-container').remove()", 3000);
+            </script>
+            <% } %>
             <form method="POST" action="/users/login">
               <div>
-                <input type="email" name="email" placeholder="Email" required/>
+                <input type="email" name="email" placeholder="Email" required />
               </div>
               <div>
-                <input type="password" name="password" placeholder="Password" required/>
+                <input type="password" name="password" placeholder="Password" required />
               </div>
               <button type="submit">Login</button>
             </form>

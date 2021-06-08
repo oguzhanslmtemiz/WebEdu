@@ -51,12 +51,15 @@ module.exports.createCourse = async (req, res) => {
             category: req.body.category,
             user: req.session.userID
         })
+        req.flash("createSuccess", "Course successfully created")
         res.status(201).redirect('/courses')
     } catch (error) {
-        res.status(400).json({
-            status: 'fail',
-            error
-        })
+        if (error.name === "MongoError" && error.code === 11000) {
+          req.flash("error", 'Course name must be unique');
+        } else {
+          req.flash("error", `${error}`);
+        }
+        res.status(400).redirect("/users/dashboard");
     }
 }
 
@@ -85,15 +88,13 @@ module.exports.enrollCourse = async (req, res) => {
         await user.courses.push({
             _id: req.body.course_id
         })
-        await user.save()
+        user.save()
+        req.flash("success", "You're successfully enrolled")
         res.status(200).redirect('/users/dashboard')
     } catch (error) {
-        res.status(400).json({
-            status: 'fail',
-            error
-        })
+        req.flash("error", `${error}`)
+        res.status(400).redirect('/users/dashboard')
     }
-
 }
 
 module.exports.unenrollCourse = async (req, res) => {
@@ -102,12 +103,53 @@ module.exports.unenrollCourse = async (req, res) => {
         await user.courses.pull({
             _id: req.body.course_id
         })
-        await user.save()
+        user.save()
+        req.flash("success", "You're successfully unenrolled")
         res.status(200).redirect('/users/dashboard')
     } catch (error) {
-        res.status(400).json({
-            status: 'fail',
-            error
-        })
+        req.flash("error", `${error}`)
+        res.status(400).redirect('/users/dashboard')
     }
 }
+
+module.exports.deleteCourse = async (req, res) => {
+  try {
+    await Course.findOneAndDelete({
+      slug: req.params.slug,
+      user: req.session.userID
+    });
+    req.flash("success", "Course has been removed");
+    res.status(200).redirect("/users/dashboard");
+  } catch (error) {
+    req.flash("error", `${error}`);
+    res.status(400).redirect("/users/dashboard");
+  }
+};
+
+module.exports.updateCourse = async (req, res) => {
+  try {
+    const course = await Course.findOne({
+      slug: req.params.slug,
+      user: req.session.userID
+    });
+    course.name = req.body.name;
+    course.description = req.body.description;
+    course.category = req.body.category;
+    course.save(function (err) {
+      if (err) {
+        if (err.name === "MongoError" && err.code === 11000) {
+          req.flash("error", "Course name must be unique");
+        } else {
+          req.flash("error", `${err.message}`);
+        }
+        res.status(400).redirect("/users/dashboard");
+      } else {
+        req.flash("success", "Course successfully updated");
+        res.status(200).redirect("/users/dashboard");
+      }
+    });
+  } catch (error) {
+    req.flash("error", `${error}`);
+    res.status(400).redirect("/users/dashboard");
+  }
+};

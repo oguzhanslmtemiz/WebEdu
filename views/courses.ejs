@@ -19,6 +19,22 @@
         <p>
           It is a long established fact that a reader will be distracted
         </p>
+        <% if (flashMessages) { %>
+        <div id="alert-container" class="text-center">
+          <% if (flashMessages.createSuccess) { %>
+          <div class="alert alert-success">
+            <%= flashMessages.createSuccess %>
+          </div>
+          <% } else if (flashMessages.null ) { %>
+          <div class="alert alert-danger">
+            <%= flashMessages.null %>
+          </div>
+          <% } %>
+        </div>
+        <script type="text/javascript">
+          setTimeout("document.getElementById('alert-container').remove()", 3000);
+        </script>
+        <% } %>
       </div>
       <div class="categories">
         <div class="row">
