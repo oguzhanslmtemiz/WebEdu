@@ -13,10 +13,10 @@ module.exports.course = async (req, res, next) => {
   await body("name")
     .trim()
     .notEmpty()
-    .withMessage(" Please enter course name")
+    .withMessage(" Please enter a course name")
     .run(req);
   await body("role")
-    .isIn("teacher")
+    .isIn(["teacher", "admin"])
     .withMessage(" You Are Not Authorized to Create Course")
     .run(req);
   await body("description")
@@ -28,6 +28,17 @@ module.exports.course = async (req, res, next) => {
     .isIn(idOfCategories)
     .withMessage(" Please select a valid category")
     .run(req);
+  if (req.session.userRole === "admin") {
+    const teachers = await User.find({ role: "teacher" });
+    let idOfTeachers = [];
+    for (let i = 0; i < teachers.length; i++) {
+      idOfTeachers.push(teachers[i]._id);
+    }
+    await body("user")
+      .isIn(idOfTeachers)
+      .withMessage(" Please select a valid teacher")
+      .run(req);
+  }
 
   const result = validationResult(req).formatWith(({ msg }) => {
     return msg;
@@ -61,7 +72,7 @@ module.exports.contact = async (req, res, next) => {
     .run(req);
   await body("email")
     .isEmail()
-    .withMessage(" Please enter valid email")
+    .withMessage(" Please enter a valid email")
     .run(req);
   await body("message")
     .trim()
@@ -89,7 +100,7 @@ module.exports.register = async (req, res, next) => {
     .run(req);
   await body("email")
     .isEmail()
-    .withMessage(" Please enter valid email")
+    .withMessage(" Please enter a valid email")
     .custom(async (bodyEmail) => {
       return await User.findOne({
         email: bodyEmail,
@@ -101,8 +112,8 @@ module.exports.register = async (req, res, next) => {
     })
     .run(req);
   await body("role")
-    .isIn(["student", "teacher"])
-    .withMessage("Your role must be a student or teacher")
+    .isIn(["student", "teacher", "admin"])
+    .withMessage(" Please select a valid role")
     .run(req);
   await body("password")
     .notEmpty()
@@ -123,7 +134,7 @@ module.exports.register = async (req, res, next) => {
 module.exports.login = async (req, res, next) => {
   await body("email")
     .isEmail()
-    .withMessage(" Please enter valid email")
+    .withMessage(" Please enter a valid email")
     .run(req);
   await body("password")
     .notEmpty()
@@ -137,6 +148,23 @@ module.exports.login = async (req, res, next) => {
   if (!result.isEmpty()) {
     req.flash("error", `${result.array()}`);
     res.status(400).redirect("/login");
+  } else {
+    next();
+  }
+};
+
+module.exports.category = async (req, res, next) => {
+  await body("name")
+    .trim()
+    .notEmpty()
+    .withMessage(" Please enter a category name")
+    .run(req);
+  const result = validationResult(req).formatWith(({ msg }) => {
+    return msg;
+  });
+  if (!result.isEmpty()) {
+    req.flash("error", `${result.array()}`);
+    res.status(400).redirect("/users/dashboard");
   } else {
     next();
   }

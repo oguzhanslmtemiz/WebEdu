@@ -19,9 +19,9 @@
                   <div class="detail-box">
                     <div>
                       <h1>
-                        E D U C A T I O N
+                        C O U R S E S
                       </h1>
-                      <a href="">
+                      <a href="/courses">
                         Read More
                       </a>
                     </div>
@@ -37,9 +37,9 @@
                   <div class="detail-box">
                     <div>
                       <h1>
-                        E D U C A T I O N
+                        R E G I S T E R
                       </h1>
-                      <a href="">
+                      <a href="/register">
                         Read More
                       </a>
                     </div>
@@ -83,12 +83,9 @@
           </div>
           <div class="detail-box">
             <h4>
-              BEST <br />
-              INDUSTRY LEADERS
+              <%= countTeachers %> <br />
+              TEACHERS
             </h4>
-            <a href="">
-              Read More
-            </a>
           </div>
         </div>
         <div class="box b2">
@@ -97,12 +94,10 @@
           </div>
           <div class="detail-box">
             <h4>
-              LEARN <br />
-              COURSES ONLINE
+              
+              <%= countStudents %> <br />
+              STUDENTS
             </h4>
-            <a href="">
-              Read More
-            </a>
           </div>
         </div>
         <div class="box b3">
@@ -111,12 +106,9 @@
           </div>
           <div class="detail-box">
             <h4>
-              BEST <br />
-              LIBRARY & STORE
+              <%= countCourses %> <br />
+              COURSES
             </h4>
-            <a href="">
-              Read More
-            </a>
           </div>
         </div>
       </div>
@@ -125,45 +117,7 @@
 
   <!-- end special section -->
 
-  <!-- about section -->
-  <section class="about_section layout_padding">
-    <div class="side_img">
-      <img src="/images/side-img.png" alt="" />
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="img_container">
-            <div class="img-box b1">
-              <img src="/images/a-1.jpg" alt="" />
-            </div>
-            <div class="img-box b2">
-              <img src="/images/a-2.jpg" alt="" />
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="detail-box">
-            <div class="heading_container">
-              <h3>
-                About Our College
-              </h3>
-              <p>
-                It is a long established fact that a reader will be distracted
-                by the readable content of a page when looking at its layout.
-                The point of using Lorem Ipsum is that it has a more it
-              </p>
-              <a href="">
-                Read More
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- end about section -->
+  <%- include('partials/_about') %>
 
   <!-- course section -->
 
@@ -174,69 +128,15 @@
     <div class="container">
       <div class="heading_container">
         <h3>
-          POPULAR COURSES
+          NEW COURSES
         </h3>
         <p>
           It is a long established fact that a reader will be distracted
         </p>
       </div>
-      <div class="course_container">
-        <div class="course_content">
-          <div class="box">
-            <img src="/images/c-1.jpg" alt="" />
-            <a href="" class="">
-              <img src="/images/link.png" alt="" />
-            </a>
-            <h5>
-              LMS <br />
-              Content
-            </h5>
-          </div>
-          <div class="box">
-            <img src="/images/c-2.jpg" alt="" />
-            <a href="" class="">
-              <img src="/images/link.png" alt="" />
-            </a>
-            <h5>
-              From <br />
-              Zero to Hero
-            </h5>
-          </div>
-        </div>
-        <div class="course_content">
-          <div class="box">
-            <img src="/images/c-3.jpg" alt="" />
-            <a href="" class="">
-              <img src="/images/link.png" alt="" />
-            </a>
-            <h5>
-              Learn <br />
-              Python – Interactive
-            </h5>
-          </div>
-          <div class="box">
-            <img src="/images/c-4.jpg" alt="" />
-            <a href="" class="">
-              <img src="/images/link.png" alt="" />
-            </a>
-            <h5>
-              Your <br />
-              Complete Guide
-            </h5>
-          </div>
-          <div class="box">
-            <img src="/images/c-5.jpg" alt="" />
-            <a href="" class="">
-              <img src="/images/link.png" alt="" />
-            </a>
-            <h5>
-              Photography
-            </h5>
-          </div>
-        </div>
-      </div>
+      <%- include('partials/_courses') %>
       <div class="btn-box">
-        <a href="">
+        <a href="/courses">
           Read More
         </a>
       </div>
@@ -244,48 +144,9 @@
   </section>
 
   <!-- end course section -->
-
-  <!-- login section -->
-
-  <section class="login_section layout_padding">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="detail-box">
-            <h3>
-              GET ONLINE COURSES FOR FREE
-            </h3>
-            <p>
-              Create your free account now and get immediate access to 100s of
-              online courses
-            </p>
-            <a href="">
-              REGISTER NOW
-            </a>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="login_form">
-            <h5>
-              Login Now
-            </h5>
-            <form action="">
-              <div>
-                <input type="email" placeholder="Email " />
-              </div>
-              <div>
-                <input type="password" placeholder="Password" />
-              </div>
-              <button type="submit">Login</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- end login section -->
-
+  <% if (!userIN) { %>
+  <%- include('partials/_login') %> 
+  <% } %>
   <!-- event section -->
   <section class="event_section layout_padding">
     <div class="container">
@@ -342,7 +203,7 @@
         </div>
       </div>
       <div class="btn-box">
-        <a href="">
+        <a href="/events">
           Read More
         </a>
       </div>
@@ -434,53 +295,6 @@
 
   <!-- end client section -->
 
-  <!-- contact section -->
+  <%- include('partials/_contact') %>
 
-  <section class="contact_section ">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="detail-box">
-            <div class="heading_container">
-              <h3>
-                Contact Us
-              </h3>
-              <p>
-                It is a long established fact that a reader will be distracted
-                by the readable
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="contact-form">
-            <h5>
-              Get In Touch
-            </h5>
-            <form action="">
-              <div>
-                <input type="text" placeholder="Full Name " />
-              </div>
-              <div>
-                <input type="text" placeholder="Phone Number" />
-              </div>
-              <div>
-                <input type="email" placeholder="Email Address" />
-              </div>
-              <div>
-                <input type="text" placeholder="Message" class="input_message" />
-              </div>
-              <div class="d-flex justify-content-center">
-                <button type="submit" class="btn_on-hover">
-                  Send
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- end contact section -->
   <%- include('partials/_footer') %>

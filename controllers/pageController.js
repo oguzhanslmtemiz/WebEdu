@@ -1,15 +1,20 @@
 const nodemailer = require("nodemailer")
-const {
-    validationResult
-} = require('express-validator')
+const Course = require("../models/Course");
+const User = require("../models/User");
 
-
-module.exports.getIndexPage = (req, res) => {
-    console.log("userID:", req.session.userID);
-    res.status(200).render('index', {
-        page_name: "index"
-    })
-}
+module.exports.getIndexPage = async (req, res) => {
+  const courses = await Course.find().sort("-createdAt").limit(3).populate('user');
+  const countCourses = await Course.countDocuments();
+  const countStudents = await User.countDocuments({ role: "student" });
+  const countTeachers = await User.countDocuments({ role: "teacher" });
+  res.status(200).render("index", {
+    page_name: "index",
+    courses,
+    countCourses,
+    countStudents,
+    countTeachers,
+  });
+};
 module.exports.getAboutPage = (req, res) => {
     res.status(200).render('about', {
         page_name: "about"

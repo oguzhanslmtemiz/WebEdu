@@ -5,7 +5,7 @@
     <%- include('partials/_header') %>
   </div>
 
-  <!-- course section -->
+  <!-- courses section -->
 
   <section class="course_section layout_padding">
     <div class="side_img">
@@ -21,13 +21,13 @@
         </p>
         <% if (flashMessages) { %>
         <div id="alert-container" class="text-center">
-          <% if (flashMessages.createSuccess) { %>
+          <% if (flashMessages.success) { %>
           <div class="alert alert-success">
-            <%= flashMessages.createSuccess %>
+            <%= flashMessages.success %>
           </div>
-          <% } else if (flashMessages.null ) { %>
+          <% } else if (flashMessages.error ) { %>
           <div class="alert alert-danger">
-            <%= flashMessages.null %>
+            <%= flashMessages.error %>
           </div>
           <% } %>
         </div>
@@ -65,27 +65,9 @@
           </div>
         </div>
       </div>
-      <div class="course_container">
-        <div class="course_content">
-          <% for (let i = 0; i < courses.length; i++) { %>
-          <div class="box">
-            <img src="/images/c-2.jpg" alt="" />
-            <a href="/courses/<%= courses[i].slug %>" class="">
-              <img src="/images/link.png" alt="" />
-            </a>
-            <h5> <%= courses[i].name %> </h5>
-            <span><%= courses[i].user.name %></span>
-          </div>
-          <% } %>
-        </div>
-      </div>
-      <div class="btn-box">
-        <a href="">
-          Read More
-        </a>
-      </div>
+    <%- include('partials/_courses') %>
     </div>
   </section>
 
-  <!-- end course section -->
+  <!-- end courses section -->
   <%- include('partials/_footer') %>

@@ -36,32 +36,42 @@ module.exports.getAllCourses = async (req, res) => {
             categories
         })
     } catch (error) {
-        res.status(400).json({
-            status: 'fail',
-            error
-        })
+      req.flash("error", `${error}`);
+      res.status(400).redirect("/courses");
     }
 }
 
 module.exports.createCourse = async (req, res) => {
-    try {
-        await Course.create({
-            name: req.body.name,
-            description: req.body.description,
-            category: req.body.category,
-            user: req.session.userID
-        })
-        req.flash("createSuccess", "Course successfully created")
-        res.status(201).redirect('/courses')
-    } catch (error) {
-        if (error.name === "MongoError" && error.code === 11000) {
-          req.flash("error", 'Course name must be unique');
-        } else {
-          req.flash("error", `${error}`);
-        }
-        res.status(400).redirect("/users/dashboard");
+  try {
+    if (req.session.userRole === "admin") {
+      await Course.create({
+        name: req.body.name,
+        description: req.body.description,
+        category: req.body.category,
+        user: req.body.user,
+      });
+      req.flash("success", "Course successfully created");
+      res.status(201).redirect("/users/dashboard");
+    } else {
+      await Course.create({
+        name: req.body.name,
+        description: req.body.description,
+        category: req.body.category,
+        user: req.session.userID,
+      });
+      req.flash("success", "Course successfully created");
+      res.status(201).redirect("/courses");
     }
-}
+    req.flash("success", "Course successfully created");
+  } catch (error) {
+    if (error.name === "MongoError" && error.code === 11000) {
+      req.flash("error", "Course name must be unique");
+    } else {
+      req.flash("error", `${error}`);
+    }
+    res.status(400).redirect("/users/dashboard");
+  }
+};
 
 module.exports.getCourse = async (req, res) => {
     try {
@@ -85,7 +95,7 @@ module.exports.getCourse = async (req, res) => {
 module.exports.enrollCourse = async (req, res) => {
     try {
         const user = await User.findById(req.session.userID)
-        await user.courses.push({
+        user.courses.push({
             _id: req.body.course_id
         })
         user.save()
@@ -100,7 +110,7 @@ module.exports.enrollCourse = async (req, res) => {
 module.exports.unenrollCourse = async (req, res) => {
     try {
         const user = await User.findById(req.session.userID)
-        await user.courses.pull({
+        user.courses.pull({
             _id: req.body.course_id
         })
         user.save()
@@ -114,10 +124,16 @@ module.exports.unenrollCourse = async (req, res) => {
 
 module.exports.deleteCourse = async (req, res) => {
   try {
-    await Course.findOneAndDelete({
-      slug: req.params.slug,
-      user: req.session.userID
-    });
+    if (req.session.userRole === "admin") {
+      await Course.findOneAndDelete({
+        slug: req.params.slug,
+      });
+    } else {
+      await Course.findOneAndDelete({
+        slug: req.params.slug,
+        user: req.session.userID,
+      });
+    }
     req.flash("success", "Course has been removed");
     res.status(200).redirect("/users/dashboard");
   } catch (error) {
@@ -128,10 +144,18 @@ module.exports.deleteCourse = async (req, res) => {
 
 module.exports.updateCourse = async (req, res) => {
   try {
-    const course = await Course.findOne({
-      slug: req.params.slug,
-      user: req.session.userID
-    });
+    let course
+    if (req.session.userRole === "admin") {
+      course = await Course.findOne({
+        slug: req.params.slug,
+      });
+      course.user = req.body.user;
+    } else {
+      course = await Course.findOne({
+        slug: req.params.slug,
+        user: req.session.userID,
+      });
+    }
     course.name = req.body.name;
     course.description = req.body.description;
     course.category = req.body.category;

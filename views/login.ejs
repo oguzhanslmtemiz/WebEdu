@@ -5,56 +5,6 @@
     <%- include('partials/_header') %>
   </div>
 
-  <!-- login section -->
-
-  <section class="login_section layout_padding">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="detail-box">
-            <h3>
-              GET ONLINE COURSES FOR FREE
-            </h3>
-            <p>
-              Create your free account now and get immediate access to 100s of
-              online courses
-            </p>
-            <a href="/register">
-              REGISTER NOW
-            </a>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="login_form">
-            <h5>
-              Login Now
-            </h5>
-            <% if (flashMessages) { %>
-            <div id="alert-container" class="text-center">
-              <% if (flashMessages.error) { %>
-              <div class="alert alert-danger">
-                <%= flashMessages.error %>
-              </div>
-              <% } %>
-            </div>
-            <script type="text/javascript">
-              setTimeout("document.getElementById('alert-container').remove()", 3000);
-            </script>
-            <% } %>
-            <form method="POST" action="/users/login">
-              <div>
-                <input type="email" name="email" placeholder="Email" required />
-              </div>
-              <div>
-                <input type="password" name="password" placeholder="Password" required />
-              </div>
-              <button type="submit">Login</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- end login section -->
+  <%- include('partials/_login') %>
+  
   <%- include('partials/_footer') %>
