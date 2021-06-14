@@ -1,45 +1,47 @@
-const Course = require('../models/Course')
-const Category = require('../models/Category')
-const User = require('../models/User')
+const Course = require("../models/Course");
+const Category = require("../models/Category");
+const User = require("../models/User");
 
 module.exports.getAllCourses = async (req, res) => {
-    try {
-        const categorySlug = req.query.categories // http://localhost:5000/courses?categories={here}
-        const category = await Category.findOne({
-            slug: categorySlug
-        })
+  try {
+    const categorySlug = req.query.categories; // http://localhost:5000/courses?categories={here}
+    const category = await Category.findOne({
+      slug: categorySlug,
+    });
 
-        let filter = {}
-        if (categorySlug) {
-            filter = {
-                category: category._id
-            }
-        }
-        const searchQuery = req.query.search
-        if (searchQuery) {
-            filter = {
-                name: {
-                    $regex: '.*' + searchQuery + '.*',
-                    $options: 'ix'
-                }
-            }
-        }
-
-        const categories = await Category.find()
-        const courses = await Course.find(filter).sort('-createdAt').populate('user')
-
-        res.status(200).render('courses', {
-            status: 'success',
-            page_name: "courses",
-            categorySlug: categorySlug,
-            courses,
-            categories
-        })
-    } catch (error) {
-      req.flash("error", `${error}`);
-      res.status(400).redirect("/courses");
+    let filter = {};
+    if (categorySlug) {
+      filter = {
+        category: category._id,
+      };
     }
-}
+    const searchQuery = req.query.search;
+    if (searchQuery) {
+      filter = {
+        name: {
+          $regex: ".*" + searchQuery + ".*",
+          $options: "ix",
+        },
+      };
+    }
+
+    const categories = await Category.find();
+    const courses = await Course.find(filter)
+      .sort("-createdAt")
+      .populate("user");
+
+    res.status(200).render("courses", {
+      status: "success",
+      page_name: "courses",
+      categorySlug: categorySlug,
+      courses,
+      categories,
+    });
+  } catch (error) {
+    req.flash("error", `${error}`);
+    res.status(400).redirect("/courses");
+  }
+};
 
 module.exports.createCourse = async (req, res) => {
   try {
@@ -74,53 +76,53 @@ module.exports.createCourse = async (req, res) => {
 };
 
 module.exports.getCourse = async (req, res) => {
-    try {
-        const course = await Course.findOne({
-            slug: req.params.slug
-        }).populate('user')
-        const user = await User.findById(req.session.userID)
-        res.status(200).render('course', {
-            course,
-            page_name: "courses",
-            user
-        })
-    } catch (error) {
-        res.status(400).json({
-            status: 'fail',
-            error
-        })
-    }
-}
+  try {
+    const course = await Course.findOne({
+      slug: req.params.slug,
+    }).populate("user");
+    const user = await User.findById(req.session.userID);
+    res.status(200).render("course", {
+      course,
+      page_name: "courses",
+      user,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      error,
+    });
+  }
+};
 
 module.exports.enrollCourse = async (req, res) => {
-    try {
-        const user = await User.findById(req.session.userID)
-        user.courses.push({
-            _id: req.body.course_id
-        })
-        user.save()
-        req.flash("success", "You're successfully enrolled")
-        res.status(200).redirect('/users/dashboard')
-    } catch (error) {
-        req.flash("error", `${error}`)
-        res.status(400).redirect('/users/dashboard')
-    }
-}
+  try {
+    const user = await User.findById(req.session.userID);
+    user.courses.push({
+      _id: req.body.course_id,
+    });
+    user.save();
+    req.flash("success", "You're successfully enrolled");
+    res.status(200).redirect("/users/dashboard");
+  } catch (error) {
+    req.flash("error", `${error}`);
+    res.status(400).redirect("/users/dashboard");
+  }
+};
 
 module.exports.unenrollCourse = async (req, res) => {
-    try {
-        const user = await User.findById(req.session.userID)
-        user.courses.pull({
-            _id: req.body.course_id
-        })
-        user.save()
-        req.flash("success", "You're successfully unenrolled")
-        res.status(200).redirect('/users/dashboard')
-    } catch (error) {
-        req.flash("error", `${error}`)
-        res.status(400).redirect('/users/dashboard')
-    }
-}
+  try {
+    const user = await User.findById(req.session.userID);
+    user.courses.pull({
+      _id: req.body.course_id,
+    });
+    user.save();
+    req.flash("success", "You're successfully unenrolled");
+    res.status(200).redirect("/users/dashboard");
+  } catch (error) {
+    req.flash("error", `${error}`);
+    res.status(400).redirect("/users/dashboard");
+  }
+};
 
 module.exports.deleteCourse = async (req, res) => {
   try {
@@ -144,7 +146,7 @@ module.exports.deleteCourse = async (req, res) => {
 
 module.exports.updateCourse = async (req, res) => {
   try {
-    let course
+    let course;
     if (req.session.userRole === "admin") {
       course = await Course.findOne({
         slug: req.params.slug,

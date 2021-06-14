@@ -1,9 +1,12 @@
-const nodemailer = require("nodemailer")
+const nodemailer = require("nodemailer");
 const Course = require("../models/Course");
 const User = require("../models/User");
 
 module.exports.getIndexPage = async (req, res) => {
-  const courses = await Course.find().sort("-createdAt").limit(3).populate('user');
+  const courses = await Course.find()
+    .sort("-createdAt")
+    .limit(3)
+    .populate("user");
   const countCourses = await Course.countDocuments();
   const countStudents = await User.countDocuments({ role: "student" });
   const countTeachers = await User.countDocuments({ role: "teacher" });
@@ -16,30 +19,30 @@ module.exports.getIndexPage = async (req, res) => {
   });
 };
 module.exports.getAboutPage = (req, res) => {
-    res.status(200).render('about', {
-        page_name: "about"
-    })
-}
+  res.status(200).render("about", {
+    page_name: "about",
+  });
+};
 module.exports.getLoginPage = (req, res) => {
-    res.status(200).render('login', {
-        page_name: "login"
-    })
-}
+  res.status(200).render("login", {
+    page_name: "login",
+  });
+};
 module.exports.getRegisterPage = (req, res) => {
-    res.status(200).render('register', {
-        page_name: "register"
-    })
-}
+  res.status(200).render("register", {
+    page_name: "register",
+  });
+};
 module.exports.getEventsPage = (req, res) => {
-    res.status(200).render('events', {
-        page_name: "events"
-    })
-}
+  res.status(200).render("events", {
+    page_name: "events",
+  });
+};
 module.exports.getContactPage = (req, res) => {
-    res.status(200).render('contact', {
-        page_name: "contact"
-    })
-}
+  res.status(200).render("contact", {
+    page_name: "contact",
+  });
+};
 module.exports.sendEmail = async (req, res) => {
   try {
     const transporter = nodemailer.createTransport({
